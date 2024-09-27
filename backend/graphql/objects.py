@@ -4,6 +4,7 @@ from graphene_sqlalchemy import SQLAlchemyObjectType
 
 from ..models import User as UserModel, \
     Profile as ProfileModel, \
+    Blog as BlogModel, \
     Skill as SkillModel
 
 class UserObject(SQLAlchemyObjectType):
@@ -35,6 +36,14 @@ class SkillObject(SQLAlchemyObjectType):
    class Meta:
        model = SkillModel
        interface = (relay.Node, )
+
+class BlogObject(SQLAlchemyObjectType): #added a BlogObject
+   class Meta:
+       model = BlogModel
+       interface = (relay.Node, )
+
+   title = graphene.String()  #added part: defined the fields
+   body_content = graphene.String()
 
 
 class SkillInput(graphene.InputObjectType):

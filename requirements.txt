@@ -86,4 +86,4 @@ graphene-sqlalchemy
 flask-graphql
 flask-migrate
 graphene
-
+marshmallow

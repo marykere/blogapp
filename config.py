@@ -1,6 +1,8 @@
 import os
 
 class Config:
+   SECRET_KEY = os.getenv('SECRET_KEY') #added a config for the secret_keys
+   JWT_SECRET_KEY = os.getenv ('JWT_SECRET_KEY', 'jwt_secret_key')
    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
    @staticmethod

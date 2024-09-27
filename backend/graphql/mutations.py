@@ -1,8 +1,15 @@
 import graphene
 
 from backend import db
-from ..graphql.objects import UserObject as User, ProfileObject as Profile, SkillInput
-from ..models import User as UserModel, Profile as ProfileModel, Skill as SkillModel
+from ..graphql.objects import UserObject as User, \
+    ProfileObject as Profile, \
+    SkillInput, \
+    BlogObject as Blog
+
+from ..models import User as UserModel, \
+    Profile as ProfileModel, \
+    Blog as BlogModel, \
+    Skill as SkillModel
 
 
 
@@ -46,7 +53,32 @@ class ProfileMutation(graphene.Mutation):
 
        return ProfileMutation(profile=profile)
 
+ #creating a section for the blog mutation 
 
+class BlogMutation(graphene.Mutation): 
+    class Arguments:
+        body_content = graphene.String(required=True)
+        title = graphene.String(required=True)
+        #first_name = graphene.String(required=True)
+        #last_name = graphene.String(required=True)
+        #user_id = graphene.Int(required=True)
+
+    blog = graphene.Field(lambda: Blog)
+
+    #def mutate(self, info, title, body_content, user_id, first_name, last_name):
+    def mutate(self, info, title, body_content):
+        # user = UserModel.query.get(user_id)
+
+        # profile = ProfileModel(first_name=first_name, last_name=last_name)
+
+        blog=BlogModel(title=title, body_content=body_content)
+
+        db.session.add(blog)
+        db.session.commit()
+
+        return BlogMutation(blog=blog)
+    
 class Mutation(graphene.ObjectType):
    mutate_user = UserMutation.Field()
    mutate_profile = ProfileMutation.Field()
+   mutate_blog = BlogMutation.Field()

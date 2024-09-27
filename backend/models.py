@@ -38,3 +38,14 @@ class Skill(db.Model):
    def __repr__(self):
        return f"<Skill {self.name} >"
    
+class Blog(db.Model):
+   __tablename__ = 'blogs'
+   id = db.Column(db.Integer, primary_key=True)
+   title = db.Column(db.String(20),
+                    index=True, nullable=False)
+   body_content = db.Column(
+       db.String(10000))
+
+   def __repr__(self):
+       return f"<Blog {self.title} {self.body_content}>"
+   
