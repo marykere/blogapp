@@ -3,13 +3,12 @@ import graphene
 from backend import db
 from ..graphql.objects import UserObject as User, \
     ProfileObject as Profile, \
-    SkillInput, \
     BlogObject as Blog
 
 from ..models import User as UserModel, \
     Profile as ProfileModel, \
-    Blog as BlogModel, \
-    Skill as SkillModel
+    Blog as BlogModel
+    
 
 
 
@@ -33,18 +32,13 @@ class ProfileMutation(graphene.Mutation):
        first_name = graphene.String(required=True)
        last_name = graphene.String(required=True)
        user_id = graphene.Int(required=True)
-       skills = graphene.List(SkillInput)
 
    profile = graphene.Field(lambda: Profile)
 
-   def mutate(self, info, first_name, last_name, user_id, skills):
+   def mutate(self, info, first_name, last_name, user_id):
        user = UserModel.query.get(user_id)
 
        profile = ProfileModel(first_name=first_name, last_name=last_name)
-
-       skill_list = [SkillModel(name=input_skill.name) for input_skill in skills]
-
-       profile.skills.extend(skill_list)
 
        db.session.add(profile)
 

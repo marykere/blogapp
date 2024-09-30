@@ -21,22 +21,10 @@ class Profile(db.Model):
    id = db.Column(db.Integer, primary_key=True)
    first_name = db.Column(db.String(20))
    last_name = db.Column(db.String(20))
-   skills = db.relationship("Skill")
+   
 
    def __repr__(self):
        return f"<Profile {self.first_name} {self.last_name}: #{self.id} >"
-
-
-class Skill(db.Model):
-   __tablename__ = 'skills'
-   id = db.Column(db.Integer, primary_key=True)
-   name = db.Column(db.String(20), unique=True,
-                    index=True, nullable=False)
-   profile_id = db.Column(
-       db.Integer, db.ForeignKey('profiles.id'))
-
-   def __repr__(self):
-       return f"<Skill {self.name} >"
    
 class Blog(db.Model):
    __tablename__ = 'blogs'
@@ -44,7 +32,7 @@ class Blog(db.Model):
    title = db.Column(db.String(20),
                     index=True, nullable=False)
    body_content = db.Column(
-       db.String(10000))
+       db.Text, nullable=False)
 
    def __repr__(self):
        return f"<Blog {self.title} {self.body_content}>"

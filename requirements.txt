@@ -86,4 +86,5 @@ graphene-sqlalchemy
 flask-graphql
 flask-migrate
 graphene
-marshmallow
+flask_marshmallow
+python-dotenv
