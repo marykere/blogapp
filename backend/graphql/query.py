@@ -49,5 +49,14 @@ class Query(graphene.ObjectType):
            query = query.filter(
                BlogModel.body_content == body_content)
        return query.all()
+   
+   def resolve_create_blog(self, user, info, **kwargs): #this part is added for user suspension
+       query = User.get_query(info)
+
+       if user.is_suspended:
+           raise Exception ("Your Account has been suspended")
+           query = query.filter(
+               BlogModel.body_content == body_content)
+       return query.all()
 
    all_users = SQLAlchemyConnectionField(User)

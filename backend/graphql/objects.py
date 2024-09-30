@@ -7,11 +7,14 @@ from ..models import User as UserModel, \
     Blog as BlogModel
 
 class UserObject(SQLAlchemyObjectType):
-   user_id = graphene.Int(source='id')
+    user_id = graphene.Int(source='id')
+    is_suspended = graphene.Boolean()  # Add is_suspended field
+    profile = graphene.Field(lambda: ProfileObject)  # Add profile relationship
 
-   class Meta:
-       model = UserModel
-       interfaces = (relay.Node, )
+    class Meta:
+        model = UserModel
+        interfaces = (relay.Node, )
+
 
 class ProfileObject(SQLAlchemyObjectType):
    class Meta:
@@ -19,10 +22,15 @@ class ProfileObject(SQLAlchemyObjectType):
        interface = (relay.Node, )
 
 
-class BlogObject(SQLAlchemyObjectType): #added a BlogObject
-   class Meta:
-       model = BlogModel
-       interface = (relay.Node, )
+class BlogObject(SQLAlchemyObjectType):
+    title = graphene.String()
+    body_content = graphene.String()  # Add the Text body content as a string
+    created_at = graphene.DateTime()
+    updated_at = graphene.DateTime()
+    image_url = graphene.String()  # Add the image_url field
 
-   title = graphene.String()  #added part: defined the fields
-   body_content = graphene.String()
+    class Meta:
+        model = BlogModel
+        interfaces = (relay.Node, )
+
+
