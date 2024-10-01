@@ -23,6 +23,7 @@ class Query(graphene.ObjectType):
 
    def resolve_users(self, info, email=None):
        query = User.get_query(info)
+       #query = info.context.session.query(UserModel)
 
        if email:
            query = query.filter(UserModel.email == email)
@@ -33,6 +34,7 @@ class Query(graphene.ObjectType):
 
    def resolve_profiles(self, info, id=None):
        query = Profile.get_query(info)
+       #query = info.context.session.query(ProfileModel) 
 
        if id:
            query = query.filter(
@@ -44,6 +46,7 @@ class Query(graphene.ObjectType):
 
    def resolve_blogs(self, info, body_content = None):
        query = Blog.get_query(info)
+       #query = info.context.session.query(BlogModel) 
 
        if body_content:
            query = query.filter(
@@ -52,6 +55,7 @@ class Query(graphene.ObjectType):
    
    def resolve_create_blog(self, user, info, **kwargs): #this part is added for user suspension
        query = User.get_query(info)
+       #query = info.context.session.query(UserModel)
 
        if user.is_suspended:
            raise Exception ("Your Account has been suspended")

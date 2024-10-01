@@ -1,4 +1,4 @@
-#from app import ma
+from app import ma
 from marshmallow import fields
 from api.models import User
 

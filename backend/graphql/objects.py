@@ -17,9 +17,12 @@ class UserObject(SQLAlchemyObjectType):
 
 
 class ProfileObject(SQLAlchemyObjectType):
-   class Meta:
+    # first_name = graphene.String(required=True)
+    # last_name = graphene.String(required=True)
+    # user_id = graphene.Int(required=True)
+    class Meta:
        model = ProfileModel
-       interface = (relay.Node, )
+       interfaces = (relay.Node, )
 
 
 class BlogObject(SQLAlchemyObjectType):
