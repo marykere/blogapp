@@ -13,9 +13,6 @@ class User(db.Model):
    #THIS IS NEW BELOW
    profile_id = db.Column(
        db.Integer, db.ForeignKey('profiles.id'))
-   profile = db.relationship(
-       "Profile", backref='user')
-   blogs = db.relationship('Blog', back_populates='user')
    password_hash = db.Column(
         db.String(256), unique=True, nullable=False)
    def set_password(self, password): 
@@ -27,6 +24,9 @@ class User(db.Model):
    def check_and_suspend_user(self):
        if datetime.now() - self.profile.logged_in_time > timedelta(days=30): #added a suspend user field 
            self.is_suspended=True
+   profile = db.relationship(
+       "Profile", backref='user')
+   blogs = db.relationship('Blog', back_populates='user')
 
 
    def __repr__(self):
